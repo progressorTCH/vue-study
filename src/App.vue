@@ -1,10 +1,29 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div class="content">
+    <div class="headerContent">
+      <HeaderContent />
+    </div>
+    <div class="body">
+      <div class="menu">
+        <MenuList />
+      </div>
+      <div class="content">
+        <RouterView />
+      </div>
+    </div>
+  </div>
 </template>
+<script>
+import MenuList from "@/components/app/MenuList.vue";
+import HeaderContent from "@/components/app/HeaderContent.vue";
+export default {
+  name: "HomePage",
+  components: { MenuList, HeaderContent },
+  data() {
+    return {};
+  },
+};
+</script>
 
 <style lang="less">
 #app {
@@ -13,17 +32,18 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  overflow-y: auto;
+  width: 100%;
+  overflow-x: hidden;
+  .body {
+    display: flex;
+    flex-direction: row;
+    .menu {
+      width: 10vw;
+      min-width: 300px;
+    }
+    .content {
+      flex: 1;
     }
   }
 }
