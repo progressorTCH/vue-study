@@ -93,7 +93,7 @@
           <div class="minute">59</div>
         </div>
       </div>
-      <div class="sencondContent" id="sencondContent">
+      <div class="secondContent" id="secondContent">
         <div class="secondContain" id="secondContain">
           <div class="second">00</div>
           <div class="second">01</div>
@@ -166,7 +166,9 @@
 export default {
   name: "TurntableClock",
   data() {
-    return {};
+    return {
+      aInterval: null,
+    };
   },
   methods: {},
   mounted() {
@@ -175,7 +177,6 @@ export default {
     let minute = time.getMinutes();
     let second = time.getSeconds() + 1;
     const s = 1000;
-    const delays = 1000 - time.getMilliseconds();
     function turnHour() {
       const elHour = document.getElementById("hourContain");
       if (elHour != null) {
@@ -212,14 +213,14 @@ export default {
         }
       }
     }
-    setTimeout(() => {
+    this.aInterval = setInterval(() => {
       turnSecond();
       turnMinute();
       turnHour();
-      setInterval(() => {
-        turnSecond();
-      }, s);
-    }, delays);
+    }, s);
+  },
+  unmounted() {
+    clearInterval(this.aInterval);
   },
 };
 </script>
@@ -229,8 +230,8 @@ export default {
 @hourContainSize: 510px;
 @minuteContainSize: 460px;
 @secondContainSize: 410px;
-@msdeg: 6deg;
-@hdeg: 15deg;
+@msDeg: 6deg;
+@hDeg: 15deg;
 @hn: 24;
 @msn: 60;
 @fontSize: 12px;
@@ -274,7 +275,7 @@ export default {
 
         .loop(@i) when(@i<=@hn) {
           .hour:nth-child(@{i}) {
-            transform: rotate((@hdeg * (@i - 1)))
+            transform: rotate((@hDeg * (@i - 1)))
               translateY((-@hourContainSize / 2 + @fontSize));
           }
 
@@ -306,7 +307,7 @@ export default {
 
         .loop(@i) when(@i<=@msn) {
           .minute:nth-child(@{i}) {
-            transform: rotate((@msdeg * (@i - 1)))
+            transform: rotate((@msDeg * (@i - 1)))
               translateY((-@minuteContainSize / 2 + @fontSize));
           }
 
@@ -317,7 +318,7 @@ export default {
       }
     }
 
-    .sencondContent {
+    .secondContent {
       width: @secondContainSize;
       height: @secondContainSize;
       top: ((@containSize - @secondContainSize)/2);
@@ -338,10 +339,9 @@ export default {
 
         .loop(@i) when(@i<=@msn) {
           .second:nth-child(@{i}) {
-            transform: rotate((@msdeg * (@i - 1)))
+            transform: rotate((@msDeg * (@i - 1)))
               translateY((-@secondContainSize / 2 + @fontSize));
           }
-
           .loop(@i + 1);
         }
 

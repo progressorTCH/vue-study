@@ -14,11 +14,11 @@
   </div>
 </template>
 <script>
-import MenuList from "@/components/app/MenuList.vue";
+import MenuList from "./components/app/MenuList.vue";
 import HeaderContent from "@/components/app/HeaderContent.vue";
 export default {
   name: "HomePage",
-  components: { MenuList, HeaderContent },
+  components: { HeaderContent, MenuList },
   data() {
     return {};
   },

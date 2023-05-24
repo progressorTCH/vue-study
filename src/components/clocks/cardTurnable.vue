@@ -66,7 +66,7 @@ export default {
   name: "cardTurnable",
   mounted() {
     this.initClock();
-    setInterval(() => {
+    this.aInterval = setInterval(() => {
       this.second++;
       if (this.second == 60) {
         this.second = 0;
@@ -176,6 +176,7 @@ export default {
       hourNum2: 1,
       hourNum3: 2,
       hourNum4: 3,
+      aInterval: null,
     };
   },
   methods: {
@@ -187,6 +188,9 @@ export default {
     },
   },
   computed: {},
+  unmounted() {
+    clearInterval(this.aInterval);
+  },
 };
 </script>
 
@@ -396,7 +400,7 @@ export default {
     }
     .cardContent4 {
       z-index: 8;
-      transform: rotateX(0deg); //bunenggai
+      transform: rotateX(0deg);
       .cardTop {
         z-index: 7;
       }

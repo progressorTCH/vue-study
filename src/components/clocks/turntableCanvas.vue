@@ -10,7 +10,9 @@
 export default {
   name: "turntableCanvas",
   data() {
-    return {};
+    return {
+      aInterval: null,
+    };
   },
   methods: {
     initClock() {
@@ -22,7 +24,7 @@ export default {
       const ctx = canvas.getContext("2d");
       if (ctx != null) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = "10px sans-serif blod";
+        ctx.font = "10px sans-serif bold";
         const hourDeg = 360 / 24;
         const minuteDeg = 360 / 60;
         for (let i = 0; i < 24; i++) {
@@ -64,9 +66,12 @@ export default {
   mounted() {
     const self = this;
     this.initClock();
-    setInterval(() => {
+    this.aInterval = setInterval(() => {
       self.initClock();
     }, 1000);
+  },
+  unmounted() {
+    clearInterval(this.aInterval);
   },
 };
 </script>
